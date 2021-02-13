@@ -42,6 +42,8 @@ app.get('/data', (req, res) => {
 app.post('/sendData', (req, res) => {
     console.log(`PUT API CALL`);
     console.log(req.body);
+    dataArray.push(req.body);
+    console.log(dataArray);
     res.send("Send Complete");
 });
 
