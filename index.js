@@ -23,4 +23,16 @@ const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
+//data
+const data = {
+    location: "Horsham",
+    temperature: 5,
+    feeling: "good"
+}
+
+//API
+app.get('/data', (req, res) => {
+    res.end(JSON.stringify(data));
+});
+
 
