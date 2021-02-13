@@ -30,9 +30,23 @@ const data = {
     feeling: "good"
 }
 
+const dataArray = [];
+
 //API
 app.get('/data', (req, res) => {
-    res.end(JSON.stringify(data));
+    //JSON.stringify - convert Javascript object or value into a JSON string
+    //res.end(JSON.stringify(data));
+    res.send(data);
+});
+
+app.post('/sendData', (req, res) => {
+    console.log(`PUT API CALL`);
+    console.log(req.body);
+    res.send("Send Complete");
+});
+
+app.post('/', (req, res) => {
+    console.log("Request recieved");
 });
 
 
