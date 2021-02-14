@@ -1,9 +1,45 @@
+<!-- https://www.freepik.com/free-vector/template-weather-prognosis_871782.htm#page=1&query=weather&position=24 -->
+<!DOCTYPE html>
 <html>
     <head>
         <title>Andrew's Weather App</title>
+        <meta charset="utf-8">
+        <meta name = "viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Mono&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h1>Hello from the weather app</h1>
+        <main>
+            <h1 class="app-title">Weather</h1>
+            <section class="current-weather-card">
+                    <form class="weather-form">
+                        <!-- <h2>Location</h2> -->
+                        <input type="text" id="zip" placeholder="Zip Code">
+                        <input type="text" id="Country" placeholder="Country">
+                        <!-- <h2>How do you feel today?</h2> -->
+                        <input type="text" id="feeling" placeholder="How do you feel today?">
+                        <button id="generate">Generate</button>
+                    </form>
+                <div class="weather-result-container">
+                    <!-- <div class="weather-placeholder">
+                        <h3>placeholder</h3>
+                    </div> -->
+                        <div class="weather-result-image-container">
+                            <!-- <img src="./media/weather-graphics/sun.png" alt="weather-graphic"> -->
+                            <!-- <a href='https://www.freepik.com/vectors/business'>Business vector created by macrovector - www.freepik.com</a> -->
+                        </div>
+                        <div class="weather-result-text">
+                            <h3 class="weather-description">Sunny</h3>
+                            <p>Date: <span>14/02/2021</span></p>
+                            <p>Temperature<span>25C</span></p>
+                            <p>Wind: 50km/h NW</p>
+                            <p>Comments: <span>I feel great</span></p>
+                        </div>
+
+                </div>
+            </section>
+        </main>
     </body>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </html>

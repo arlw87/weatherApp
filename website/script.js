@@ -1,4 +1,12 @@
+import {key} from "./apikey.js"; 
 console.log("Hello Client");
+
+//TODO
+//backgorund color and button color change depending on the weather 
+//blue for rain
+//grey for clouds
+//yellow for sun?
+
 
 //lets do a fetch
 
@@ -17,7 +25,6 @@ const dummyData = {temp: 32, date: "Monday 1st March", userResponse: "its a nice
 postData("/sendData", dummyData);
 
 //weather API
-const apiKey = '';
 let loc = 'Southampton';
 
 const getWeatherData = async(url = "") => {
@@ -32,5 +39,6 @@ const getWeatherData = async(url = "") => {
     }
 }
 
-let apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${apiKey}&units=metric`;
+console.log(key);
+let apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${key}&units=metric`;
 getWeatherData(apiURL);
