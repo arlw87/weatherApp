@@ -14,10 +14,10 @@
             <section class="current-weather-card">
                     <form class="weather-form">
                         <!-- <h2>Location</h2> -->
-                        <input type="text" id="zip" placeholder="Zip Code">
+                        <input type="text" id="zip" placeholder="enter zip code here">
                         <input type="text" id="country" placeholder="Country">
                         <!-- <h2>How do you feel today?</h2> -->
-                        <input type="text" id="feeling" placeholder="How do you feel today?">
+                        <input type="textarea" id="feeling" placeholder="How do you feel today?">
                         <button id="generate">Generate</button>
                     </form>
                 <div class="weather-result-container">
@@ -28,17 +28,22 @@
                             <!-- <img src="./media/weather-graphics/sun.png" alt="weather-graphic"> -->
                             <!-- <a href='https://www.freepik.com/vectors/business'>Business vector created by macrovector - www.freepik.com</a> -->
                         </div>
-                        <div class="weather-result-text">
+                        <div class="weather-result-text" id="entryHolder">
                             <h3 class="weather-description">Sunny</h3>
-                            <p>Date: <span>14/02/2021</span></p>
-                            <p>Temperature<span>25C</span></p>
-                            <p>Wind: 50km/h NW</p>
-                            <p>Comments: <span>I feel great</span></p>
+                            <div id="date">
+                                Date: 14/02/2021
+                            </div>
+                            <div id="temp">
+                                Temperature: 
+                            </div>
+                            <div id="content">
+                                Comments: I feel great
+                            </div>
                         </div>
 
                 </div>
             </section>
         </main>
     </body>
-    <script type="module" src="script.js"></script>
+    <script type="module" src="app.js"></script>
 </html>

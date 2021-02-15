@@ -30,7 +30,7 @@ const data = {
     feeling: "good"
 }
 
-const dataArray = [];
+const projectData = [];
 
 //API
 app.get('/data', (req, res) => {
@@ -40,11 +40,19 @@ app.get('/data', (req, res) => {
 });
 
 app.post('/sendData', (req, res) => {
-    console.log(`PUT API CALL`);
-    console.log(req.body);
-    dataArray.push(req.body);
-    console.log(dataArray);
-    res.send("Send Complete");
+    try{
+        console.log(`PUT API CALL`);
+        console.log(req.body);
+        projectData.push(req.body);
+        console.log(projectData);
+        res.send({status : 'complete'});
+    } catch(error) {
+        console.log("There was an issue");
+        console.log(error);
+        //if there was an issue let the client know
+        res.send({status : 'incomplete'});
+    }
+
 });
 
 app.post('/', (req, res) => {
