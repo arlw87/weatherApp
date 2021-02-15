@@ -6,42 +6,27 @@ function postDataObj(temp, date, userResponse){
     this.userResponse = userResponse;
 }
 
-
-//TODO
-//backgorund color and button color change depending on the weather 
-//blue for rain
-//grey for clouds
-//yellow for sun?
-
 const button = document.querySelector('#generate');
 button.addEventListener('click', (event) => {
     event.preventDefault();
-    console.log("Hello Client");
     //get Data from form
     const zip = document.getElementById('zip').value;
     const country = document.getElementById('country').value;
-    // let apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${key}&units=metric`;
-    let apiURL = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}`;
-    console.log(apiURL);
-
+    let apiURL = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}&units=metric`;
+    //api calls
     getWeatherData(apiURL)
     .then((data) => postData('/sendData', data))
     .then((values) => updateUI(values)); 
-
 });
 
 
-
-//lets do a fetch
-
 const postData = async (url="", data = {}) => {
-
     //gather data to post
-    const userComments = document.getElementById('feeling').value;
     const date = todaysDate();
     const temp = data.main.temp;
+    const comments = getUserComments();
 
-    const obj = new postDataObj(temp, todaysDate(), userComments);
+    const obj = new postDataObj(temp, date, comments);
     const response = await fetch( url, {
         method: 'POST',
         headers: {
@@ -72,8 +57,16 @@ const postData = async (url="", data = {}) => {
 };
 
 const todaysDate = () => {
-    const today = new Date();
-    return today.toUTCString();
+    return new Date();
+}
+
+const todaysDateString = () => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return todaysDate().toLocaleDateString('en-UK', options);
+}
+
+const getUserComments = () => {
+    return document.getElementById('feeling').value;
 }
 
 const getWeatherData = async(url = "") => {
@@ -91,11 +84,16 @@ const getWeatherData = async(url = "") => {
 }
 
 const updateUI = async (data)=>{
-    console.log('hello from updatUI');
-    console.log(data);
-    //update the UI here
-    // console.log(document.getElementById('temp'));
-    document.getElementById('temp').innerHTML = `Temperature: ${data.main.temp}`;
+    document.getElementById('temp').innerHTML = `${data.main.temp} &#176;C`;
+    document.getElementById('wind').innerHTML = `${data.wind.deg}&#176; ${data.wind.speed} m/s`;
+    document.getElementById('content').innerHTML = `${getUserComments()}`;
+    document.getElementById('date').innerHTML = `${todaysDateString()}`;
+    document.getElementById('weather-description').innerHTML = `${data.weather[0].description}`;
+    document.getElementById('location').innerHTML = `${data.name}`;
+    //set the weather icon
+    const icon = data.weather[0].icon;
+    console.log(document.querySelector('.weather-result-image-container'));
+    document.querySelector('.weather-result-image-container').setAttribute('style',`background-Image: url(http://openweathermap.org/img/wn/${icon}@2x.png);`);
 };
 
 

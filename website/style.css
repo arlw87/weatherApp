@@ -11,20 +11,25 @@ main {
   height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+}
+
+.debug-border {
+  border: 1px solid black;
 }
 
 .app-title {
   background-color: rgb(0, 25, 251);
   color: #fff;
   padding: 0 10px;
+  font-size: 2.5em;
 }
 
 .current-weather-card {
   width: 80vw;
-  height: 60vh;
+  height: 80vh;
   /* border-radius: 15px; */
   display: flex;
   justify-content: space-around;
@@ -35,15 +40,8 @@ main {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.shadow {
-  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
-    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-    0 100px 80px rgba(0, 0, 0, 0.12);
-}
-
 .weather-form {
-  height: 50%;
+  height: 40%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -63,6 +61,7 @@ main {
   /* background-color: #f7f7f7; */
   background-color: transparent;
   border-bottom: 1px white solid;
+  color: #fff;
 }
 
 ::placeholder {
@@ -79,7 +78,7 @@ main {
 }
 
 .weather-result-container {
-  height: 50%;
+  height: 60%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -90,19 +89,21 @@ main {
 
 .weather-result-image-container {
   width: 100%;
-  height: 45%;
-  /* border: 1px red solid; */
-  background-image: url(./media/weather-graphics/sun.png);
-  background-size: contain;
+  height: 40%;
+  /* background-image: url(http://openweathermap.org/img/wn/10d@2x.png); */
+  background-size: 70%;
   background-repeat: no-repeat;
   background-position: center;
   /* border: tomato 1px solid; */
 }
 
 .weather-result-text {
-  width: 90%;
+  width: 95%;
   height: 50%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .weather-result-text p {
@@ -113,10 +114,40 @@ main {
 .weather-result-text h3 {
   margin: 5px 0 15px 0;
   text-align: center;
-  font-size: 2em;
 }
 
 .weather-placeholder {
+}
+
+.weather-info-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+.weather-info {
+}
+
+.weather-header-one {
+  margin: 3px 0;
+}
+
+.weather-header-two {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+#content {
+  overflow: hidden;
+  max-height: 1.5em;
+  text-overflow: ellipsis;
 }
 
 @media (min-width: 767px) {
@@ -133,7 +164,15 @@ main {
   }
 
   .current-weather-card {
-    height: 40vh;
+    height: 50vh;
+  }
+
+  main {
+    justify-content: center;
+  }
+
+  .app-title {
+    font-size: 3em;
   }
 }
 
