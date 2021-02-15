@@ -23,9 +23,11 @@ button.addEventListener('click', (event) => {
     // let apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${key}&units=metric`;
     let apiURL = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}`;
     console.log(apiURL);
-    getWeatherData(apiURL).then((data) => {
-        postData('/sendData', data);
-    }).then((data) => updateUI(data)); 
+
+    getWeatherData(apiURL)
+    .then((data) => postData('/sendData', data))
+    .then((values) => updateUI(values)); 
+
 });
 
 
@@ -93,7 +95,7 @@ const updateUI = async (data)=>{
     console.log(data);
     //update the UI here
     // console.log(document.getElementById('temp'));
-    // document.getElementById('temp').innerHTML = `Temperature: ${data.main.temp}`;
+    document.getElementById('temp').innerHTML = `Temperature: ${data.main.temp}`;
 };
 
 
