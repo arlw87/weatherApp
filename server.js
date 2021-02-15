@@ -23,26 +23,19 @@ const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
-//data
-const data = {
-    location: "Horsham",
-    temperature: 5,
-    feeling: "good"
-}
-
 const projectData = [];
 
 //API
-app.get('/data', (req, res) => {
-    //JSON.stringify - convert Javascript object or value into a JSON string
-    //res.end(JSON.stringify(data));
-    res.send(data);
+app.get('/data-all', (req, res) => {
+    res.send(projectData);
+});
+
+app.get('/data-latest', (req, res) => {
+    res.send(projectData[projectData.length-1]);
 });
 
 app.post('/sendData', (req, res) => {
     try{
-        console.log(`PUT API CALL`);
-        console.log(req.body);
         projectData.push(req.body);
         console.log(projectData);
         res.send({status : 'complete'});

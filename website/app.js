@@ -1,32 +1,46 @@
 import {key} from "./apikey.js"; 
 
-function postDataObj(temp, date, userResponse){
+function postDataObj(temp, date, userResponse, wind, description, icon, location){
     this.temp = temp;
     this.date = date;
     this.userResponse = userResponse;
+    this.wind = wind;
+    this.description = description;
+    this.icon = icon;
+    this.location = location;
 }
 
-const button = document.querySelector('#generate');
-button.addEventListener('click', (event) => {
+const buttonCallback = (event) => {
     event.preventDefault();
-    //get Data from form
+
+    //get data for open weather API Call
     const zip = document.getElementById('zip').value;
     const country = document.getElementById('country').value;
-    let apiURL = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}&units=metric`;
+    let url = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}&units=metric`;
+
     //api calls
-    getWeatherData(apiURL)
+    getAPICall(url)
     .then((data) => postData('/sendData', data))
+    .then(() => getAPICall('/data-latest'))
     .then((values) => updateUI(values)); 
-});
+    //catch the errors here
+};
+
+const button = document.querySelector('#generate');
+button.addEventListener('click', buttonCallback);
 
 
 const postData = async (url="", data = {}) => {
     //gather data to post
-    const date = todaysDate();
+    const date = todaysDateString();
     const temp = data.main.temp;
     const comments = getUserComments();
+    const description = data.weather[0].description;
+    const wind = data.wind;
+    const icon = data.weather[0].icon;
+    const location = data.name;
 
-    const obj = new postDataObj(temp, date, comments);
+    const obj = new postDataObj(temp, date, comments, wind, description, icon, location);
     const response = await fetch( url, {
         method: 'POST',
         headers: {
@@ -39,7 +53,6 @@ const postData = async (url="", data = {}) => {
     //if the status is Send Complete then continue
     //if not then there was an error and report it
     try{
-        console.log(response);
         const status = await response.json();
         console.log(status);
         // if (status === 'complete'){
@@ -66,34 +79,38 @@ const todaysDateString = () => {
 }
 
 const getUserComments = () => {
-    return document.getElementById('feeling').value;
+    return document.getElementById('feelings').value;
 }
 
-const getWeatherData = async(url = "") => {
-    const response = await fetch(url);
-
-    try{
-        const data = await response.json();
-        console.log(data);
-        return data;
-    } catch (error){
-        console.log("There has been an error");
-        console.log(error);
-        throw error;
-    }
+const getAPICall = async(url = '') => {
+   
+        const response = await fetch(url);
+        try{
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error){
+            console.log(error);
+            throw error;
+        }
 }
 
 const updateUI = async (data)=>{
-    document.getElementById('temp').innerHTML = `${data.main.temp} &#176;C`;
+    console.log("update UI");
+    console.log(data);
+    document.getElementById('temp').innerHTML = `${data.temp} &#176;C`;
     document.getElementById('wind').innerHTML = `${data.wind.deg}&#176; ${data.wind.speed} m/s`;
-    document.getElementById('content').innerHTML = `${getUserComments()}`;
-    document.getElementById('date').innerHTML = `${todaysDateString()}`;
-    document.getElementById('weather-description').innerHTML = `${data.weather[0].description}`;
-    document.getElementById('location').innerHTML = `${data.name}`;
+    document.getElementById('content').innerHTML = `${data.userResponse}`;
+    document.getElementById('date').innerHTML = `${data.date}`;
+    document.getElementById('weather-description').innerHTML = `${data.description}`;
+    document.getElementById('location').innerHTML = `${data.location}`;
     //set the weather icon
-    const icon = data.weather[0].icon;
+    const icon = data.icon;
     console.log(document.querySelector('.weather-result-image-container'));
     document.querySelector('.weather-result-image-container').setAttribute('style',`background-Image: url(http://openweathermap.org/img/wn/${icon}@2x.png);`);
+    //hide placeholder and show results
+    document.querySelector('.weather-placeholder').setAttribute('style','display: none;');
+    document.querySelector('.weather-results').setAttribute('style','display: flex;');
 };
 
 
