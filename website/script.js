@@ -1,11 +1,25 @@
 import {key} from "./apikey.js"; 
-console.log("Hello Client");
+
 
 //TODO
 //backgorund color and button color change depending on the weather 
 //blue for rain
 //grey for clouds
 //yellow for sun?
+
+const button = document.querySelector('#generate');
+button.addEventListener('click', (event) => {
+    event.preventDefault();
+    console.log("Hello Client");
+    //get Data from form
+    const zip = document.getElementById('zip').value;
+    const country = document.getElementById('country').value;
+    // let apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${key}&units=metric`;
+    let apiURL = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}`;
+    console.log(apiURL);
+    getWeatherData(apiURL); 
+});
+
 
 
 //lets do a fetch
@@ -39,6 +53,4 @@ const getWeatherData = async(url = "") => {
     }
 }
 
-console.log(key);
-let apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${loc}&appid=${key}&units=metric`;
-getWeatherData(apiURL);
+
