@@ -18,12 +18,21 @@ const buttonCallback = (event) => {
     const country = document.getElementById('country').value;
     let url = `http://api.openweathermap.org/data/2.5/weather?zip=${zip},${country}&appid=${key}&units=metric`;
 
+    //get comments for input validation
+    const comments = getUserComments();
+
+    //input validation
+    if (zip === '' || country === '' || comments === ''){
+        alert("ERROR - One or more input fields are blank");
+        return;
+    }
+
     //api calls
     getAPICall(url)
     .then((data) => postData('/sendData', data))
     .then(() => getAPICall('/data-latest'))
-    .then((values) => updateUI(values)); 
-    //catch the errors here
+    .then((values) => updateUI(values))
+    .catch((error)=>alert(error));
 };
 
 const button = document.querySelector('#generate');
@@ -49,21 +58,24 @@ const postData = async (url="", data = {}) => {
         body: JSON.stringify(obj)
     });
 
+    //check the server got the API request
+    if (response.status != 200){
+        throw `Did not get response from POST API call to - ${url}`;
+    }
+
     //check the data was received at the server
-    //if the status is Send Complete then continue
+    //if the status is complete then continue
     //if not then there was an error and report it
     try{
         const status = await response.json();
         console.log(status);
-        // if (status === 'complete'){
-        //     return data;
-        // } else {
-        //     throw "Server could not save data";
-        // }
-        console.log('hello from postData');
-        return data;
+        if (status.status == 'complete'){
+            return data;
+        } else {
+            throw `Server could not save data`;
+        }
     } catch(error){
-        console.log(error);
+        throw error;
     }
 
 
@@ -85,32 +97,37 @@ const getUserComments = () => {
 const getAPICall = async(url = '') => {
    
         const response = await fetch(url);
+        console.log(`response code: ${response.status}`);
+
+        if (response.status != 200){
+            throw `Did not get response from GET API call to - ${url}`;
+        }
+
         try{
             const data = await response.json();
-            console.log(data);
             return data;
         } catch (error){
-            console.log(error);
             throw error;
         }
 }
 
 const updateUI = async (data)=>{
-    console.log("update UI");
-    console.log(data);
-    document.getElementById('temp').innerHTML = `${data.temp} &#176;C`;
-    document.getElementById('wind').innerHTML = `${data.wind.deg}&#176; ${data.wind.speed} m/s`;
-    document.getElementById('content').innerHTML = `${data.userResponse}`;
-    document.getElementById('date').innerHTML = `${data.date}`;
-    document.getElementById('weather-description').innerHTML = `${data.description}`;
-    document.getElementById('location').innerHTML = `${data.location}`;
-    //set the weather icon
-    const icon = data.icon;
-    console.log(document.querySelector('.weather-result-image-container'));
-    document.querySelector('.weather-result-image-container').setAttribute('style',`background-Image: url(http://openweathermap.org/img/wn/${icon}@2x.png);`);
-    //hide placeholder and show results
-    document.querySelector('.weather-placeholder').setAttribute('style','display: none;');
-    document.querySelector('.weather-results').setAttribute('style','display: flex;');
+    try{
+        document.getElementById('temp').innerHTML = `${data.temp} &#176;C`;
+        document.getElementById('wind').innerHTML = `${data.wind.deg}&#176; ${data.wind.speed} m/s`;
+        document.getElementById('content').innerHTML = `${data.userResponse}`;
+        document.getElementById('date').innerHTML = `${data.date}`;
+        document.getElementById('weather-description').innerHTML = `${data.description}`;
+        document.getElementById('location').innerHTML = `${data.location}`;
+        //set the weather icon
+        const icon = data.icon;
+        document.querySelector('.weather-result-image-container').setAttribute('style',`background-Image: url(http://openweathermap.org/img/wn/${icon}@2x.png);`);
+        //hide placeholder and show results
+        document.querySelector('.weather-placeholder').setAttribute('style','display: none;');
+        document.querySelector('.weather-results').setAttribute('style','display: flex;');
+    } catch(error){
+        throw error;
+    }
 };
 
 

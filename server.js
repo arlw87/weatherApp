@@ -35,12 +35,11 @@ app.get('/data-latest', (req, res) => {
 });
 
 app.post('/sendData', (req, res) => {
+
     try{
         projectData.push(req.body);
-        console.log(projectData);
         res.send({status : 'complete'});
     } catch(error) {
-        console.log("There was an issue");
         console.log(error);
         //if there was an issue let the client know
         res.send({status : 'incomplete'});
