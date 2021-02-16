@@ -1,3 +1,6 @@
+//Local server that hosts the static webpage and provides an API Interface for
+//saving weather data and retrieving that saved data
+
 //imports
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -14,26 +17,38 @@ app.use(bodyParser.json());
 app.use(cors());
 
 //serves up static files at the root page from the folder website
-//put your static website here
 app.use(express.static('website'));
 
-
+//starts the server
 const port = 8000;
 const server = app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
 
+//all posted data saved in this array
 const projectData = [];
 
-//API
+//Server end points
+/**
+ * @description: GET request that returns all the data from the projectData object
+ */
 app.get('/data-all', (req, res) => {
     res.send(projectData);
 });
 
+
+/**
+ * @description: GET request that returns the last saved data in the projectData object
+ */
 app.get('/data-latest', (req, res) => {
     res.send(projectData[projectData.length-1]);
 });
 
+/**
+ * @description: POST request to save the data send from the client into projectData array. 
+ * If the save is succesful then the status complete is sent back, if its not, incomplete is
+ * sent back
+ */
 app.post('/sendData', (req, res) => {
 
     try{
@@ -46,9 +61,3 @@ app.post('/sendData', (req, res) => {
     }
 
 });
-
-app.post('/', (req, res) => {
-    console.log("Request recieved");
-});
-
-
