@@ -1,5 +1,8 @@
 # weatherApp
 
+![Operation of the website](./screenshot/weatherAppUsage.gif)
+_A gif showing the operation of the weather app frontend UI_
+
 A simpe weather application that displays basic weather information and graphics for the location that the user entered.
 
 This is a full stack solution that includes a backend server created using Node with Express and a frontend webpage using html, css and vanilla javascript.
