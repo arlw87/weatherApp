@@ -26,22 +26,15 @@ const server = app.listen(port, () => {
 });
 
 //all posted data saved in this array
-const projectData = [];
+const projectData = {};
 
 //Server end points
-/**
- * @description: GET request that returns all the data from the projectData object
- */
-app.get('/data-all', (req, res) => {
-    res.send(projectData);
-});
-
 
 /**
  * @description: GET request that returns the last saved data in the projectData object
  */
 app.get('/data-latest', (req, res) => {
-    res.send(projectData[projectData.length-1]);
+    res.send(projectData);
 });
 
 /**
@@ -52,7 +45,7 @@ app.get('/data-latest', (req, res) => {
 app.post('/sendData', (req, res) => {
 
     try{
-        projectData.push(req.body);
+        projectData = req.body;
         res.send({status : 'complete'});
     } catch(error) {
         console.log(error);
