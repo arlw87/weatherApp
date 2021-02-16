@@ -21,6 +21,32 @@ To run the project goto the root directory of the project on a command line prog
 - Start the Node server `node server.js`
 - Visit http://localhost:8000/ in your browser
 
+### Using the Frontend interface
+
+Type in a ZIP code for somewhere in the USA. Use the Country code US and then type in a comment on how you feel. Click the search button and see the displayed results.
+
+Note the app has only been tested for the USA.
+
 ## Overview
 
 ### Frontend
+
+The front end client is a responsive, mobile ready, webpage. The user enters the ZIP code for the location they want to find the weather for and the country 'US'. They also enter a brief comment on how they feel. Once they click search the app will:
+
+- Gather the weather data from the Open Weather Map API using a GET request
+- Bundle a selection of that data up with the Date and the user comment and POST that to the local server
+- Use a GET request to the local server to gather the latest searched for weather which was just posted
+- Display that data on the UI with text and graphics
+
+The user interface provides a basic validation, where if there are any blank input boxes when the user clicks search an error will be displayed. The GET and POST request are handled in the javascript using the fetch API. The javascript uses asynchronous functions and promises to control the flow of the fetch calls and the updating of the UI.
+
+### Backend
+
+The backend is a node server using the express framework. It uses body-parser and cors for middleware.
+It provides a basic API with 2 GET endpoint and one POST endpoint.
+
+_POST ‘/sendData’_ – This receives JSON data converts it into a object and saves it to the projectData array.
+
+_GET ‘/data-latest’_ – Sends the last data object saved to the projectData array in JSON format.
+
+_GET ‘/data-all’_ – returns all the data saved in projectData in JSON format.
