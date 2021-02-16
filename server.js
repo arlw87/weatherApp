@@ -26,7 +26,7 @@ const server = app.listen(port, () => {
 });
 
 //all posted data saved in this array
-const projectData = {};
+let projectData = {};
 
 //Server end points
 
