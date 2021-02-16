@@ -51,7 +51,7 @@ const button = document.querySelector('#generate');
 button.addEventListener('click', buttonCallback);
 
 /**
- * An asynchronise function that posts weather data and user data to the local server
+ * An asynchronous function that posts weather data and user data to the local server
  * @param {*} url - The url to send the post request too
  * @param {*} data - The data to send to the post request
  */
@@ -119,7 +119,7 @@ const getUserComments = () => {
 }
 
 /**
- * Asynchronise function for generic GET API call
+ * Asynchronous function for generic GET API call
  * @param url - url to make the API call too
  */
 const getAPICall = async(url = '') => {
