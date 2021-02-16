@@ -10,7 +10,17 @@ The weather data is gathered using the [Open Weather Map API](https://openweathe
 
 ```
 export const key = '';
-
 ```
 
 Enter your own API key between the quotion marks.
+
+To run the project goto the root directory of the project on a command line program, make sure you have node installed (this project was developed using v14.15.4). Then do the following:
+
+- Install all the project dependencies using `npm install`
+- Add the apikey.js file with your own API key as described above
+- Start the Node server `node server.js`
+- Visit http://localhost:8000/ in your browser
+
+## Overview
+
+### Frontend
